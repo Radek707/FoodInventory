@@ -18,7 +18,7 @@ public class Storage {
     private String storageName;
 
     @ToMany(referencedJoinProperty = "storageId")
-    private List<foodProduct> foodProducts;
+    private List<FoodProduct> FoodProducts;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -58,29 +58,29 @@ public class Storage {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 344418228)
-    public List<foodProduct> getFoodProducts() {
-        if (foodProducts == null) {
+    @Generated(hash = 1712753714)
+    public List<FoodProduct> getFoodProducts() {
+        if (FoodProducts == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            foodProductDao targetDao = daoSession.getFoodProductDao();
-            List<foodProduct> foodProductsNew = targetDao
+            FoodProductDao targetDao = daoSession.getFoodProductDao();
+            List<FoodProduct> FoodProductsNew = targetDao
                     ._queryStorage_FoodProducts(id);
             synchronized (this) {
-                if (foodProducts == null) {
-                    foodProducts = foodProductsNew;
+                if (FoodProducts == null) {
+                    FoodProducts = FoodProductsNew;
                 }
             }
         }
-        return foodProducts;
+        return FoodProducts;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 453171997)
+    @Generated(hash = 861194527)
     public synchronized void resetFoodProducts() {
-        foodProducts = null;
+        FoodProducts = null;
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.Date;
 import org.greenrobot.greendao.DaoException;
 
 @Entity
-public class foodProduct {
+public class FoodProduct {
     @Id (autoincrement = true)
     private Long id;
 
@@ -30,14 +30,11 @@ public class foodProduct {
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
-    @Generated(hash = 1318947646)
-    private transient foodProductDao myDao;
+    @Generated(hash = 1611057112)
+    private transient FoodProductDao myDao;
 
-    @Generated(hash = 1770166036)
-    private transient Long storage__resolvedKey;
-
-    @Generated(hash = 344147201)
-    public foodProduct(Long id, @NotNull String name, String barCode,
+    @Generated(hash = 874893484)
+    public FoodProduct(Long id, @NotNull String name, String barCode,
             String nutriScore, Date expireDate, long storageId) {
         this.id = id;
         this.name = name;
@@ -47,8 +44,8 @@ public class foodProduct {
         this.storageId = storageId;
     }
 
-    @Generated(hash = 19551085)
-    public foodProduct() {
+    @Generated(hash = 2001997808)
+    public FoodProduct() {
     }
 
     public Long getId() {
@@ -98,6 +95,9 @@ public class foodProduct {
     public void setStorageId(long storageId) {
         this.storageId = storageId;
     }
+
+    @Generated(hash = 1770166036)
+    private transient Long storage__resolvedKey;
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1723919968)
@@ -174,4 +174,5 @@ public class foodProduct {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodProductDao() : null;
     }
+
 }
