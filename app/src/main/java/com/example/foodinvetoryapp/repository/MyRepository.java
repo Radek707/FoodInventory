@@ -14,6 +14,7 @@ public interface MyRepository {
 
     void addStorage(Storage storage);
     void editStorage(Storage storage);
-    void detleteStorage(Storage storage);
+    void deleteStorage(long id);
+    Storage getStorageById(long id);
     List<Storage> getAllStorages();
 }

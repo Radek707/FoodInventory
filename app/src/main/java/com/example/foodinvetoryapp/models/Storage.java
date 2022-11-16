@@ -9,6 +9,8 @@ import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
+
+//TODO: add java docs
 @Entity
 public class Storage {
     @Id (autoincrement = true)
@@ -18,7 +20,7 @@ public class Storage {
     private String storageName;
 
     @ToMany(referencedJoinProperty = "storageId")
-    private List<FoodProduct> FoodProducts;
+    private List<FoodProduct> foodProducts;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -58,29 +60,29 @@ public class Storage {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1712753714)
+    @Generated(hash = 238044129)
     public List<FoodProduct> getFoodProducts() {
-        if (FoodProducts == null) {
+        if (foodProducts == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             FoodProductDao targetDao = daoSession.getFoodProductDao();
-            List<FoodProduct> FoodProductsNew = targetDao
+            List<FoodProduct> foodProductsNew = targetDao
                     ._queryStorage_FoodProducts(id);
             synchronized (this) {
-                if (FoodProducts == null) {
-                    FoodProducts = FoodProductsNew;
+                if (foodProducts == null) {
+                    foodProducts = foodProductsNew;
                 }
             }
         }
-        return FoodProducts;
+        return foodProducts;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 861194527)
+    @Generated(hash = 453171997)
     public synchronized void resetFoodProducts() {
-        FoodProducts = null;
+        foodProducts = null;
     }
 
     /**
@@ -125,4 +127,5 @@ public class Storage {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getStorageDao() : null;
     }
+    
 }

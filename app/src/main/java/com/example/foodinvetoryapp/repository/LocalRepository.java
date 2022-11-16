@@ -32,46 +32,53 @@ public class LocalRepository implements MyRepository{
 
     @Override
     public void addFoodProduct(FoodProduct foodProduct) {
-
+        foodProductDao.insert(foodProduct);
     }
 
     @Override
     public void editFoodProduct(FoodProduct foodProduct) {
-
+        foodProductDao.update(foodProduct);
     }
 
     @Override
     public void deleteFoodProduct(long id) {
-
+        FoodProduct foodProduct = getFoodProductById(id);
+        foodProductDao.delete(foodProduct);
     }
 
     @Override
     public FoodProduct getFoodProductById(long id) {
-        return null;
+        return foodProductDao.getSession().load(FoodProduct.class, id);
     }
 
     @Override
     public List<FoodProduct> getAllFoodProducts() {
-        return null;
+        return foodProductDao.getSession().loadAll(FoodProduct.class);
     }
 
     @Override
     public void addStorage(Storage storage) {
-
+        storageDao.insert(storage);
     }
 
     @Override
     public void editStorage(Storage storage) {
-
+        storageDao.update(storage);
     }
 
     @Override
-    public void detleteStorage(Storage storage) {
+    public void deleteStorage(long id) {
+        Storage storage = getStorageById(id);
+        storageDao.delete(storage);
+    }
 
+    @Override
+    public Storage getStorageById(long id) {
+        return storageDao.getSession().load(Storage.class, id);
     }
 
     @Override
     public List<Storage> getAllStorages() {
-        return null;
+        return storageDao.getSession().loadAll(Storage.class);
     }
 }

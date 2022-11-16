@@ -3,13 +3,13 @@ package com.example.foodinvetoryapp.models;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
 import org.greenrobot.greendao.DaoException;
 
+//TODO: add java docs
 @Entity
 public class FoodProduct {
     @Id (autoincrement = true)
@@ -18,7 +18,7 @@ public class FoodProduct {
     @NotNull
     private String name;
     private String barCode;
-    private String nutriScore;
+    private String nutrientScore;
     private Date expireDate;
     private long storageId;
 
@@ -33,13 +33,13 @@ public class FoodProduct {
     @Generated(hash = 1611057112)
     private transient FoodProductDao myDao;
 
-    @Generated(hash = 874893484)
+    @Generated(hash = 1044116221)
     public FoodProduct(Long id, @NotNull String name, String barCode,
-            String nutriScore, Date expireDate, long storageId) {
+            String nutrientScore, Date expireDate, long storageId) {
         this.id = id;
         this.name = name;
         this.barCode = barCode;
-        this.nutriScore = nutriScore;
+        this.nutrientScore = nutrientScore;
         this.expireDate = expireDate;
         this.storageId = storageId;
     }
@@ -47,6 +47,9 @@ public class FoodProduct {
     @Generated(hash = 2001997808)
     public FoodProduct() {
     }
+
+    @Generated(hash = 1770166036)
+    private transient Long storage__resolvedKey;
 
     public Long getId() {
         return this.id;
@@ -73,11 +76,11 @@ public class FoodProduct {
     }
 
     public String getNutriScore() {
-        return this.nutriScore;
+        return this.nutrientScore;
     }
 
     public void setNutriScore(String nutriScore) {
-        this.nutriScore = nutriScore;
+        this.nutrientScore = nutriScore;
     }
 
     public Date getExpireDate() {
@@ -96,8 +99,13 @@ public class FoodProduct {
         this.storageId = storageId;
     }
 
-    @Generated(hash = 1770166036)
-    private transient Long storage__resolvedKey;
+    public String getNutrientScore() {
+        return this.nutrientScore;
+    }
+
+    public void setNutrientScore(String nutrientScore) {
+        this.nutrientScore = nutrientScore;
+    }
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1723919968)
