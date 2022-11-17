@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/standard_padding"
+    tools:context=".StorageActivity">
+
+    <EditText
+        android:id="@+id/addStorageEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="put storage name"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:layout_marginTop="@dimen/save_button_top_margin"
+        android:layout_marginLeft="@dimen/save_button_left_margin"
+        app:layout_constraintTop_toBottomOf="@id/addStorageEditText"
+        app:layout_constraintLeft_toRightOf="@id/deleteButton"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        android:layout_marginRight="@dimen/delete_button_right_margin"
+        app:layout_constraintTop_toTopOf="@id/saveButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/saveButton"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
