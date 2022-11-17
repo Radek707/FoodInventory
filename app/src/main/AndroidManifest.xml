@@ -15,7 +15,7 @@
         android:theme="@style/Theme.FoodInvetoryApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddStorageActivity"
+            android:name=".StorageActivity"
             android:exported="false" />
         <activity
             android:name=".AddFoodProductActivity"

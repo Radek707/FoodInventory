@@ -1,18 +1,21 @@
 package com.example.foodinvetoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.foodinvetoryapp.adapters.StorageAdapter;
 import com.example.foodinvetoryapp.models.Storage;
-import com.example.foodinvetoryapp.repository.LocalRepository;
 import com.example.foodinvetoryapp.repository.MyRepository;
 import com.example.foodinvetoryapp.repository.RepositoryProvider;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StorageAdapter.OnStorageClickListener{
 
     private MyRepository myLocalRepository;
     private List<Storage> storages;
@@ -22,12 +25,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myLocalRepository = RepositoryProvider.getInstance(this);
+        FloatingActionButton addStorageButton = findViewById(R.id.addStorageButton);
+        addStorageButton.setOnClickListener(view -> openAddStorageActivity());
+    }
 
-        Storage storage = new Storage();
-        storage.setStorageName("Refrigerator");
-        myLocalRepository.addStorage(storage);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        myLocalRepository = RepositoryProvider.getInstance(this);
         storages = myLocalRepository.getAllStorages();
-        Toast.makeText(this, "Storage name: " + storages.get(0), Toast.LENGTH_SHORT).show();
+
+        RecyclerView recyclerView = findViewById(R.id.storageRecyclerView);
+        recyclerView.setAdapter(new StorageAdapter(this, storages, this));
+    }
+
+    @Override
+    public void onClick(int position) {
+        Intent intent = new Intent(this, StorageActivity.class);
+        long id = storages.get(position).getId();
+        intent.putExtra(TAG.STORAGE_ID, id);
+        startActivity(intent);
+    }
+
+    private void openAddStorageActivity() {
+        Intent intent = new Intent(this, StorageActivity.class);
+        startActivity(intent);
     }
 }
