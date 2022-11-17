@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_add_food_product.xml" value="0.1921875" />
+        <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_add_food_product.xml" value="0.39444444444444443" />
         <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_add_storage.xml" value="0.1" />
         <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_storage.xml" value="0.5" />
+        <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_storage_activity.xml" value="0.1921875" />
+        <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/activity_storage_details.xml" value="0.22" />
+        <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/food_product_layout.xml" value="0.39444444444444443" />
         <entry key="..\:/Users/rnowo/AndroidStudioProjects/FoodInvetoryApp/app/src/main/res/layout/storage_layout.xml" value="0.33" />
       </map>
     </option>

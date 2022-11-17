@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.foodinvetoryapp.adapters.StorageAdapter;
 import com.example.foodinvetoryapp.models.Storage;
@@ -42,14 +41,14 @@ public class MainActivity extends AppCompatActivity implements StorageAdapter.On
 
     @Override
     public void onClick(int position) {
-        Intent intent = new Intent(this, StorageActivity.class);
+        Intent intent = new Intent(this, StorageDetailsActivity.class);
         long id = storages.get(position).getId();
         intent.putExtra(TAG.STORAGE_ID, id);
         startActivity(intent);
     }
 
     private void openAddStorageActivity() {
-        Intent intent = new Intent(this, StorageActivity.class);
+        Intent intent = new Intent(this, AddStorageActivity.class);
         startActivity(intent);
     }
 }

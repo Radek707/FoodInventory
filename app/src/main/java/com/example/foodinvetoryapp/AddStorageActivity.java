@@ -13,7 +13,7 @@ import com.example.foodinvetoryapp.models.Storage;
 import com.example.foodinvetoryapp.repository.MyRepository;
 import com.example.foodinvetoryapp.repository.RepositoryProvider;
 
-public class StorageActivity extends AppCompatActivity {
+public class AddStorageActivity extends AppCompatActivity {
 
     private static final int NO_STORAGE = -1;
     private MyRepository myRepository;
@@ -24,7 +24,7 @@ public class StorageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_storage);
+        setContentView(R.layout.activity_add_storage);
 
         myRepository = RepositoryProvider.getInstance(this);
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/standard_padding"
-    tools:context=".StorageActivity">
+    tools:context=".AddStorageActivity">
 
     <EditText
         android:id="@+id/addStorageEditText"
