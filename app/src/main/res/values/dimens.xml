@@ -8,4 +8,5 @@
     <dimen name="delete_button_right_margin">5dp</dimen>
     <dimen name="storage_name_text_size">30sp</dimen>
     <dimen name="food_products_rv_margin_top">10dp</dimen>
+    <dimen name="food_product_name_text_size">20sp</dimen>
 </resources>

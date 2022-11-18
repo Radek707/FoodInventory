@@ -1,12 +1,15 @@
 package com.example.foodinvetoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foodinvetoryapp.adapters.FoodProductAdapter;
 import com.example.foodinvetoryapp.models.FoodProduct;
 import com.example.foodinvetoryapp.models.Storage;
 import com.example.foodinvetoryapp.repository.MyRepository;
@@ -15,7 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class StorageDetailsActivity extends AppCompatActivity {
+public class StorageDetailsActivity extends AppCompatActivity
+        implements FoodProductAdapter.OnFoodProductClickListener {
 
     private MyRepository myRepository;
     private Storage storage;
@@ -47,16 +51,31 @@ public class StorageDetailsActivity extends AppCompatActivity {
         storageNameTextView = findViewById(R.id.storageNameTextView);
         storageNameTextView.setText(storage.getStorageName());
         storageNameTextView.setOnClickListener(view -> openAddStorageActivity());
+
+        foodProducts = storage.getFoodProducts();
+
+        RecyclerView recyclerView = findViewById(R.id.foodProductsRecyclerView);
+        recyclerView.setAdapter(new FoodProductAdapter(this,
+                foodProducts,
+                this));
     }
 
     private void openAddFoodProductActivity() {
         Intent intent = new Intent(this, AddFoodProductActivity.class);
+        intent.putExtra(TAG.STORAGE_ID, storageId);
         startActivity(intent);
     }
 
     private void openAddStorageActivity() {
         Intent intent = new Intent(this, AddStorageActivity.class);
         intent.putExtra(TAG.STORAGE_ID, storageId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(int position) {
+        Intent intent = new Intent(this, AddFoodProductActivity.class);
+        intent.putExtra(TAG.FOOD_PRODUCT_ID, position);
         startActivity(intent);
     }
 }

@@ -19,10 +19,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/foodProductsRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/food_products_rv_margin_top"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/storageNameTextView"
-        android:layout_marginTop="@dimen/food_products_rv_margin_top"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addFoodProductButton"
