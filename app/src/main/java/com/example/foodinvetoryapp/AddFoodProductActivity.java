@@ -21,6 +21,7 @@ public class AddFoodProductActivity extends AppCompatActivity {
     private MyRepository myRepository;
     private EditText addFoodProductNameEditText;
     private Storage currentStorage;
+    private int foodProductPosition;
     private long foodProductId;
     private long storageId;
 
@@ -41,27 +42,28 @@ public class AddFoodProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
         currentStorage = myRepository.getStorageById(storageId);
-        foodProductId = intent.getLongExtra(TAG.FOOD_PRODUCT_ID, NO_FOOD_PRODUCT);
+        foodProductPosition = intent.getIntExtra(TAG.FOOD_PRODUCT_POSITION, NO_FOOD_PRODUCT);
 
-        if (foodProductId != NO_FOOD_PRODUCT) {
+        if (foodProductPosition != NO_FOOD_PRODUCT) {
             deleteButton.setOnClickListener(view -> deleteFoodProduct());
             deleteButton.setVisibility(View.VISIBLE);
+            foodProduct = currentStorage.getFoodProducts().get(foodProductPosition);
+            foodProductId = foodProduct.getId();
+            updateFoodProductUI(foodProduct);
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
-            updateFoodProductUI(foodProduct);
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void deleteFoodProduct() {
+        myRepository.deleteFoodProduct(foodProductId);
+        currentStorage.getFoodProducts().remove(foodProduct);
+        Toast.makeText(this, "Food product deleted.", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private void updateFoodProductUI(FoodProduct foodProduct) {
-
+        addFoodProductNameEditText.setText(foodProduct.getName());
     }
 
     private void saveFoodProduct() {
@@ -72,12 +74,13 @@ public class AddFoodProductActivity extends AppCompatActivity {
             foodProduct.setStorageId(currentStorage.getId());
             foodProduct.setName(foodProductName);
             myRepository.addFoodProduct(foodProduct);
+            currentStorage.getFoodProducts().add(foodProduct);
         } else {
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);
         }
 
-        Toast.makeText(this, "Food product saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Food product saved.", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

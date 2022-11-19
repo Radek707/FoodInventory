@@ -5,9 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.foodinvetoryapp.adapters.FoodProductAdapter;
 import com.example.foodinvetoryapp.models.FoodProduct;
@@ -25,6 +23,7 @@ public class StorageDetailsActivity extends AppCompatActivity
     private Storage storage;
     private List<FoodProduct> foodProducts;
     private long storageId;
+    private int foodProductPosition = -1;
     private static final int NO_STORAGE = -1;
     private TextView storageNameTextView;
 
@@ -63,6 +62,7 @@ public class StorageDetailsActivity extends AppCompatActivity
     private void openAddFoodProductActivity() {
         Intent intent = new Intent(this, AddFoodProductActivity.class);
         intent.putExtra(TAG.STORAGE_ID, storageId);
+        intent.putExtra(TAG.FOOD_PRODUCT_POSITION, foodProductPosition);
         startActivity(intent);
     }
 
@@ -74,8 +74,7 @@ public class StorageDetailsActivity extends AppCompatActivity
 
     @Override
     public void onClick(int position) {
-        Intent intent = new Intent(this, AddFoodProductActivity.class);
-        intent.putExtra(TAG.FOOD_PRODUCT_ID, position);
-        startActivity(intent);
+        foodProductPosition = position;
+        openAddFoodProductActivity();
     }
 }

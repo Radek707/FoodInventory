@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.foodinvetoryapp.models.FoodProduct;
 import com.example.foodinvetoryapp.models.Storage;
 import com.example.foodinvetoryapp.repository.MyRepository;
 import com.example.foodinvetoryapp.repository.RepositoryProvider;
+
+import java.util.List;
 
 public class AddStorageActivity extends AppCompatActivity {
 
@@ -55,9 +58,14 @@ public class AddStorageActivity extends AppCompatActivity {
     }
 
     private void deleteStorage() {
+        List<FoodProduct> foodProducts = myRepository.getStorageById(storageId).getFoodProducts();
+        for (FoodProduct foodProduct:foodProducts) {
+            myRepository.deleteFoodProduct(foodProduct.getId());
+        }
         myRepository.deleteStorage(storageId);
         Toast.makeText(this, "Storage deleted", Toast.LENGTH_SHORT).show();
-        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void saveStorage() {
