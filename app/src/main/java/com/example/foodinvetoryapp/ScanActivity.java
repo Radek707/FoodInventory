@@ -44,6 +44,7 @@ public class ScanActivity extends AppCompatActivity {
     private MaterialButton scanButton;
     private TextView resultTextView;
     private ImageView imageView;
+    private long storageId;
 
     public static final int CAMERA_REQUEST_CODE = 100;
     public static final int STORAGE_REQUEST_CODE = 101;
@@ -68,6 +69,9 @@ public class ScanActivity extends AppCompatActivity {
         scanButton = findViewById(R.id.scanButton);
         resultTextView = findViewById(R.id.resultTextView);
         imageView = findViewById(R.id.imageView);
+
+        Intent intent = getIntent();
+        storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
 
         cameraPermisions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermisions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -151,6 +155,7 @@ public class ScanActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AddFoodProductActivity.class);
         intent.putExtra(TAG.BARCODE_VALUE, rawValue);
+        intent.putExtra(TAG.STORAGE_ID, storageId);
         startActivity(intent);
         finish();
     }
@@ -197,7 +202,6 @@ public class ScanActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
                         Log.d(LOG_TAG, "onActivityResult: imageUri: " + imageUri);
                         imageView.setImageURI(imageUri);
                     } else {

@@ -63,6 +63,7 @@ public class StorageDetailsActivity extends AppCompatActivity
         Intent intent = new Intent(this, AddFoodProductActivity.class);
         intent.putExtra(TAG.STORAGE_ID, storageId);
         intent.putExtra(TAG.FOOD_PRODUCT_POSITION, foodProductPosition);
+        foodProductPosition = -1; //resetting position to non existing
         startActivity(intent);
     }
 

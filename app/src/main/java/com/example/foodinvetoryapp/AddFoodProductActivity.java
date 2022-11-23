@@ -47,13 +47,8 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         scanButton.setOnClickListener(view -> openScanActivity());
 
         myRepository = RepositoryProvider.getInstance(this);
-
         myRetrofitAPI = MyRetrofitAPI.getInstance();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
         currentStorage = myRepository.getStorageById(storageId);
@@ -62,9 +57,9 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
 
         if (barcodeValue != null) {
             myRetrofitAPI.getOpenFoodFactsResponse(this, barcodeValue);
+            Toast.makeText(this, "Barcode: " + barcodeValue, Toast.LENGTH_SHORT).show();
         }
 
-        Toast.makeText(this, "Barcode: " + barcodeValue, Toast.LENGTH_SHORT).show();
 
         if (foodProductPosition != NO_FOOD_PRODUCT) {
             deleteButton.setOnClickListener(view -> deleteFoodProduct());
@@ -77,9 +72,17 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     private void openScanActivity() {
         Intent intent = new Intent(this, ScanActivity.class);
+        intent.putExtra(TAG.STORAGE_ID, storageId);
         startActivity(intent);
+        finish();
     }
 
     private void deleteFoodProduct() {
@@ -90,7 +93,9 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     }
 
     private void updateFoodProductUI(FoodProduct foodProduct) {
-        addFoodProductNameEditText.setText(foodProduct.getName());
+        if (foodProduct != null) {
+            addFoodProductNameEditText.setText(foodProduct.getName());
+        }
     }
 
     private void saveFoodProduct() {
@@ -115,11 +120,11 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     @Override
     public void onSuccess(OpenFoodFactsResponse openFoodFactsResponse) {
         String productName = openFoodFactsResponse.getProduct().getFoodProductName();
-        Toast.makeText(this, "Product name: " + productName, Toast.LENGTH_SHORT).show();
+        addFoodProductNameEditText.setText(productName);
     }
 
     @Override
     public void onFailure(String message) {
-        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show();
     }
 }
