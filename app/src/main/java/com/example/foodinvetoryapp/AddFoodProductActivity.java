@@ -29,7 +29,6 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private long storageId;
     private String barcodeValue;
     Button deleteButton;
-    private MyRetrofitAPI myRetrofitAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         scanButton.setOnClickListener(view -> openScanActivity());
 
         myRepository = RepositoryProvider.getInstance(this);
-        myRetrofitAPI = MyRetrofitAPI.getInstance();
+        MyRetrofitAPI myRetrofitAPI = MyRetrofitAPI.getInstance();
 
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
@@ -60,7 +59,6 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             Toast.makeText(this, "Barcode: " + barcodeValue, Toast.LENGTH_SHORT).show();
         }
 
-
         if (foodProductPosition != NO_FOOD_PRODUCT) {
             deleteButton.setOnClickListener(view -> deleteFoodProduct());
             deleteButton.setVisibility(View.VISIBLE);
@@ -70,12 +68,6 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     private void openScanActivity() {
@@ -101,7 +93,6 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
 
     private void saveFoodProduct() {
         String foodProductName = addFoodProductNameEditText.getText().toString();
-
         if (foodProduct == null) {
             FoodProduct foodProduct = new FoodProduct();
             foodProduct.setStorageId(currentStorage.getId());
@@ -113,7 +104,6 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);
         }
-
         Toast.makeText(this, "Food product saved.", Toast.LENGTH_SHORT).show();
         finish();
     }

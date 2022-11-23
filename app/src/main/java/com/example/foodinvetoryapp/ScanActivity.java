@@ -65,15 +65,7 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        cameraButton = findViewById(R.id.cameraButton);
-        galleryButton = findViewById(R.id.galleryButton);
-        scanButton = findViewById(R.id.scanButton);
-        resultTextView = findViewById(R.id.resultTextView);
-        imageView = findViewById(R.id.imageView);
-
-        Intent intent = getIntent();
-        storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
-        foodProductPosition = intent.getIntExtra(TAG.FOOD_PRODUCT_POSITION, -1);
+        initView();
 
         cameraPermisions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermisions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -115,7 +107,18 @@ public class ScanActivity extends AppCompatActivity {
                 }
             }
         }));
+    }
 
+    private void initView() {
+        cameraButton = findViewById(R.id.cameraButton);
+        galleryButton = findViewById(R.id.galleryButton);
+        scanButton = findViewById(R.id.scanButton);
+        resultTextView = findViewById(R.id.resultTextView);
+        imageView = findViewById(R.id.imageView);
+
+        Intent intent = getIntent();
+        storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
+        foodProductPosition = intent.getIntExtra(TAG.FOOD_PRODUCT_POSITION, -1);
     }
 
     private void detectResultFromImage() {
