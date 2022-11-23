@@ -120,8 +120,12 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
 
     @Override
     public void onSuccess(OpenFoodFactsResponse openFoodFactsResponse) {
+        if (!openFoodFactsResponse.getStatus().equals("product not found")) {
         String productName = openFoodFactsResponse.getProduct().getFoodProductName();
         addFoodProductNameEditText.setText(productName);
+        } else {
+            Toast.makeText(this, "product not found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
