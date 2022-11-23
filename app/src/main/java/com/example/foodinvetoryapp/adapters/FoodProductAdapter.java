@@ -1,6 +1,7 @@
 package com.example.foodinvetoryapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
     static class FoodProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView foodProductNameTextView;
         CardView foodProductCardView;
-        ConstraintLayout foodProductConstraintLayout;
+        View foodProductLayout;
 
         OnFoodProductClickListener onFoodProductClickListener;
 
@@ -58,7 +59,7 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
 
             foodProductNameTextView = itemView.findViewById(R.id.foodProductNameTextView);
             foodProductCardView = itemView.findViewById(R.id.foodProductCardView);
-            foodProductConstraintLayout = itemView.findViewById(R.id.foodProductConstraintLayout);
+            foodProductLayout = itemView.findViewById(R.id.foodProductLayout);
 
             this.onFoodProductClickListener = onFoodProductClickListener;
             itemView.setOnClickListener(this);
