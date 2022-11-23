@@ -81,6 +81,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private void openScanActivity() {
         Intent intent = new Intent(this, ScanActivity.class);
         intent.putExtra(TAG.STORAGE_ID, storageId);
+        intent.putExtra(TAG.FOOD_PRODUCT_POSITION, foodProductPosition);
         startActivity(intent);
         finish();
     }

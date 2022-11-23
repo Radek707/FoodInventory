@@ -45,6 +45,7 @@ public class ScanActivity extends AppCompatActivity {
     private TextView resultTextView;
     private ImageView imageView;
     private long storageId;
+    private int foodProductPosition;
 
     public static final int CAMERA_REQUEST_CODE = 100;
     public static final int STORAGE_REQUEST_CODE = 101;
@@ -72,6 +73,7 @@ public class ScanActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, -1);
+        foodProductPosition = intent.getIntExtra(TAG.FOOD_PRODUCT_POSITION, -1);
 
         cameraPermisions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermisions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -119,7 +121,6 @@ public class ScanActivity extends AppCompatActivity {
     private void detectResultFromImage() {
         try {
             InputImage inputImage = InputImage.fromFilePath(this, imageUri);
-
             Task<List<Barcode>> barcodeResults = barcodeScanner.process(inputImage)
                     .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
                         @Override
@@ -141,7 +142,6 @@ public class ScanActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void extractCode(List<Barcode> barcodes) {
         String rawValue = null;
-
         for (Barcode barcode : barcodes) {
             Rect bounds = barcode.getBoundingBox();
             Point[] corners = barcode.getCornerPoints();
@@ -150,12 +150,11 @@ public class ScanActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "extractCode: " + rawValue);
 
             resultTextView.setText("raw value: " + rawValue);
-
         }
-
         Intent intent = new Intent(this, AddFoodProductActivity.class);
         intent.putExtra(TAG.BARCODE_VALUE, rawValue);
         intent.putExtra(TAG.STORAGE_ID, storageId);
+        intent.putExtra(TAG.FOOD_PRODUCT_POSITION, foodProductPosition);
         startActivity(intent);
         finish();
     }
@@ -171,7 +170,6 @@ public class ScanActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         imageUri = data.getData();
@@ -214,7 +212,6 @@ public class ScanActivity extends AppCompatActivity {
     private boolean checkStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-
         return result;
     }
 
@@ -225,10 +222,8 @@ public class ScanActivity extends AppCompatActivity {
     private boolean checkCameraPermission() {
         boolean resultCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-
         boolean resultStorage = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-
         return resultCamera && resultStorage;
     }
 
@@ -239,17 +234,12 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         switch (requestCode) {
             case CAMERA_REQUEST_CODE: {
-
                 if (grantResults.length > 0) {
-
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
                     if (cameraAccepted && storageAccepted) {
-
                         pickImageCamera();
                     } else {
                         Toast.makeText(this, "Camera & Storage permissions are required...", Toast.LENGTH_SHORT).show();
@@ -258,13 +248,9 @@ public class ScanActivity extends AppCompatActivity {
             }
             break;
             case STORAGE_REQUEST_CODE: {
-
                 if (grantResults.length > 0) {
-
                     boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
                     if (storageAccepted) {
-
                         pickImageGallery();
                     } else {
                         Toast.makeText(this, "Storage permission is required", Toast.LENGTH_SHORT).show();
