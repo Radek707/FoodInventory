@@ -41,8 +41,6 @@ import java.util.List;
 public class ScanActivity extends AppCompatActivity {
     private MaterialButton cameraButton;
     private MaterialButton galleryButton;
-    private MaterialButton scanButton;
-    private TextView resultTextView;
     private ImageView imageView;
     private long storageId;
     private int foodProductPosition;
@@ -87,14 +85,6 @@ public class ScanActivity extends AppCompatActivity {
                 requestStoragePermission();
             }
         });
-
-        scanButton.setOnClickListener((v -> {
-            if (imageUri == null) {
-                Toast.makeText(ScanActivity.this, "Pick image first", Toast.LENGTH_SHORT).show();
-            } else {
-                detectResultFromImage();
-            }
-        }));
     }
 
     private void initBarcodeScanner() {
@@ -107,8 +97,6 @@ public class ScanActivity extends AppCompatActivity {
     private void initView() {
         cameraButton = findViewById(R.id.cameraButton);
         galleryButton = findViewById(R.id.galleryButton);
-        scanButton = findViewById(R.id.scanButton);
-        resultTextView = findViewById(R.id.resultTextView);
         imageView = findViewById(R.id.imageView);
 
         Intent intent = getIntent();
@@ -136,8 +124,6 @@ public class ScanActivity extends AppCompatActivity {
 
             rawValue = barcode.getRawValue();
             Log.d(LOG_TAG, "extractCode: " + rawValue);
-
-            resultTextView.setText("raw value: " + rawValue);
         }
         Intent intent = new Intent(this, AddFoodProductActivity.class);
         intent.putExtra(TAG.BARCODE_VALUE, rawValue);
@@ -163,6 +149,7 @@ public class ScanActivity extends AppCompatActivity {
                         imageUri = data != null ? data.getData() : null;
                         Log.d(LOG_TAG, "onActivityResult: imageUri: " + imageUri);
                         imageView.setImageURI(imageUri);
+                        detectResultFromImage();
                     } else {
                         Toast.makeText(ScanActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                     }
@@ -190,6 +177,7 @@ public class ScanActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Log.d(LOG_TAG, "onActivityResult: imageUri: " + imageUri);
                         imageView.setImageURI(imageUri);
+                        detectResultFromImage();
                     } else {
                         Toast.makeText(ScanActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                     }
