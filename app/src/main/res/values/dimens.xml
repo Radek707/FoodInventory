@@ -2,7 +2,7 @@
 <resources>
     <dimen name="standard_padding">16dp</dimen>
     <dimen name="storage_text_padding">10dp</dimen>
-    <dimen name="storage_text_margin">4dp</dimen>
+    <dimen name="storage_text_margin">10dp</dimen>
     <dimen name="save_button_top_margin">20dp</dimen>
     <dimen name="save_button_left_margin">5dp</dimen>
     <dimen name="delete_button_right_margin">5dp</dimen>

@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodinvetoryapp.R;
+import com.example.foodinvetoryapp.models.FoodProduct;
 import com.example.foodinvetoryapp.models.Storage;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
     public void onBindViewHolder(@NonNull StorageViewHolder holder, int position) {
         Storage storage = storages.get(position);
         holder.storageTextView.setText(storage.getStorageName());
+        int productCount = storage.getFoodProducts().size();
+        if (productCount > 0) {
+            holder.productsCountTextView.setText(String.valueOf(productCount));
+        }
     }
 
     @Override
@@ -48,8 +53,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
 
     static class StorageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView storageCardView;
-        TextView storageTextView;
-        View storageLayout;
+        TextView storageTextView, productsCountTextView;
+        View storageLayout, storageConstraintLayout;
 
         OnStorageClickListener onStorageClickListener;
 
@@ -59,6 +64,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
             storageCardView = itemView.findViewById(R.id.storageCardView);
             storageLayout = itemView.findViewById(R.id.storageLayout);
             storageTextView = itemView.findViewById(R.id.storageTextView);
+            productsCountTextView = itemView.findViewById(R.id.productsCountTextView);
+            storageConstraintLayout = itemView.findViewById(R.id.storageConstraintLayout);
 
             this.onStorageClickListener = onStorageClickListener;
             itemView.setOnClickListener(this);
