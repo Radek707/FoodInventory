@@ -70,43 +70,38 @@ public class ScanActivity extends AppCompatActivity {
         cameraPermisions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermisions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        initBarcodeScanner();
+
+        cameraButton.setOnClickListener(v -> {
+            if (checkCameraPermission()) {
+                pickImageCamera();
+            } else {
+                requestCameraPermission();
+            }
+        });
+
+        galleryButton.setOnClickListener(v -> {
+            if (checkStoragePermission()) {
+                pickImageGallery();
+            } else {
+                requestStoragePermission();
+            }
+        });
+
+        scanButton.setOnClickListener((v -> {
+            if (imageUri == null) {
+                Toast.makeText(ScanActivity.this, "Pick image first", Toast.LENGTH_SHORT).show();
+            } else {
+                detectResultFromImage();
+            }
+        }));
+    }
+
+    private void initBarcodeScanner() {
         barcodeScannerOptions = new BarcodeScannerOptions.Builder()
                 .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
                 .build();
         barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
-
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkCameraPermission()) {
-                    pickImageCamera();
-                } else {
-                    requestCameraPermission();
-                }
-            }
-        });
-
-        galleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkStoragePermission()) {
-                    pickImageGallery();
-                } else {
-                    requestStoragePermission();
-                }
-            }
-        });
-
-        scanButton.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageUri == null) {
-                    Toast.makeText(ScanActivity.this, "Pick image first", Toast.LENGTH_SHORT).show();
-                } else {
-                    detectResultFromImage();
-                }
-            }
-        }));
     }
 
     private void initView() {
@@ -125,18 +120,8 @@ public class ScanActivity extends AppCompatActivity {
         try {
             InputImage inputImage = InputImage.fromFilePath(this, imageUri);
             Task<List<Barcode>> barcodeResults = barcodeScanner.process(inputImage)
-                    .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                        @Override
-                        public void onSuccess(List<Barcode> barcodes) {
-                            extractCode(barcodes);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ScanActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .addOnSuccessListener(barcodes -> extractCode(barcodes))
+                    .addOnFailureListener(e -> Toast.makeText(ScanActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         } catch (Exception e) {
             Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -175,7 +160,7 @@ public class ScanActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        imageUri = data.getData();
+                        imageUri = data != null ? data.getData() : null;
                         Log.d(LOG_TAG, "onActivityResult: imageUri: " + imageUri);
                         imageView.setImageURI(imageUri);
                     } else {
