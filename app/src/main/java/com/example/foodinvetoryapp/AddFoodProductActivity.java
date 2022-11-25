@@ -28,6 +28,8 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private long foodProductId;
     private long storageId;
     private String barcodeValue;
+    private String nutrientScore;
+    private String frontImageUrl;
     Button deleteButton;
 
     @Override
@@ -98,9 +100,16 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             foodProduct.setStorageId(currentStorage.getId());
             foodProduct.setName(foodProductName);
             foodProduct.setBarCode(barcodeValue);
+            foodProduct.setNutrientScore(nutrientScore);
             myRepository.addFoodProduct(foodProduct);
             currentStorage.getFoodProducts().add(foodProduct);
         } else {
+            if (foodProduct.getNutrientScore() == null && nutrientScore != null) {
+                foodProduct.setNutrientScore(nutrientScore);
+            }
+            if (foodProduct.getBarCode() == null && barcodeValue != null) {
+                foodProduct.setBarCode(barcodeValue);
+            }
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);
         }
@@ -111,8 +120,10 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     @Override
     public void onSuccess(OpenFoodFactsResponse openFoodFactsResponse) {
         if (!openFoodFactsResponse.getStatus().equals("product not found")) {
-        String productName = openFoodFactsResponse.getProduct().getFoodProductName();
-        addFoodProductNameEditText.setText(productName);
+            String productName = openFoodFactsResponse.getProduct().getFoodProductName();
+            addFoodProductNameEditText.setText(productName);
+            nutrientScore = openFoodFactsResponse.getProduct().getNutrientScore();
+            frontImageUrl = openFoodFactsResponse.getProduct().getFrontImageUrl();
         } else {
             Toast.makeText(this, "product not found", Toast.LENGTH_SHORT).show();
         }

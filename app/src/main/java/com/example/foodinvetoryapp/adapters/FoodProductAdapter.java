@@ -40,6 +40,9 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
     public void onBindViewHolder(@NonNull FoodProductViewHolder holder, int position) {
         FoodProduct foodProduct = foodProductList.get(position);
         holder.foodProductNameTextView.setText(foodProduct.getName());
+        if (foodProduct.getNutrientScore() != null) {
+            holder.nutrientScoreTextView.setText("Nutrient score: " + foodProduct.getNutrientScore());
+        }
     }
 
     @Override
@@ -48,9 +51,9 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
     }
 
     static class FoodProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView foodProductNameTextView;
+        TextView foodProductNameTextView, nutrientScoreTextView;
         CardView foodProductCardView;
-        View foodProductLayout;
+        View foodProductLayout, foodProductConstraintLayout;
 
         OnFoodProductClickListener onFoodProductClickListener;
 
@@ -60,6 +63,8 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
             foodProductNameTextView = itemView.findViewById(R.id.foodProductNameTextView);
             foodProductCardView = itemView.findViewById(R.id.foodProductCardView);
             foodProductLayout = itemView.findViewById(R.id.foodProductLayout);
+            nutrientScoreTextView = itemView.findViewById(R.id.nutrientScoreTextView);
+            foodProductConstraintLayout = itemView.findViewById(R.id.foodProductConstraintLayout);
 
             this.onFoodProductClickListener = onFoodProductClickListener;
             itemView.setOnClickListener(this);
