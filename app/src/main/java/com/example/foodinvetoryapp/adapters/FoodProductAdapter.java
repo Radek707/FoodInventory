@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodinvetoryapp.R;
 import com.example.foodinvetoryapp.models.FoodProduct;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,6 +48,19 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
         } else {
             holder.nutrientScoreTextView.setVisibility(View.GONE);
         }
+        if (foodProduct.getExpireDate() != null) {
+            holder.daysToExpireTextView.setVisibility(View.VISIBLE);
+            holder.daysToExpireTextView.setText(daysToExpire(foodProduct));
+        } else {
+            holder.daysToExpireTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private String daysToExpire(FoodProduct foodProduct) {
+        Date date = new Date();
+        long today = date.getTime();
+        long expireDay = foodProduct.getExpireDate().getTime();
+        return String.valueOf((expireDay - today) / 1000 / 60 / 60 / 24);
     }
 
     @Override
@@ -55,7 +69,7 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
     }
 
     static class FoodProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView foodProductNameTextView, nutrientScoreTextView;
+        TextView foodProductNameTextView, nutrientScoreTextView, daysToExpireTextView;
         CardView foodProductCardView;
         View foodProductLayout, foodProductConstraintLayout;
 
@@ -69,6 +83,7 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
             foodProductLayout = itemView.findViewById(R.id.foodProductLayout);
             nutrientScoreTextView = itemView.findViewById(R.id.nutrientScoreTextView);
             foodProductConstraintLayout = itemView.findViewById(R.id.foodProductConstraintLayout);
+            daysToExpireTextView = itemView.findViewById(R.id.daysToExpireTextView);
 
             this.onFoodProductClickListener = onFoodProductClickListener;
             itemView.setOnClickListener(this);

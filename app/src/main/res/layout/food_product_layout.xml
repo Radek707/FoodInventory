@@ -16,13 +16,18 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/foodProductConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"/>
 
             <TextView
                 android:id="@+id/foodProductNameTextView"
@@ -34,7 +39,7 @@
                 android:layout_marginRight="5dp"
                 android:textSize="@dimen/food_product_name_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toRightOf="@id/barrier"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Food product name Food product nameFood product nameFood product name"/>
 
@@ -47,6 +52,20 @@
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/foodProductNameTextView"
                 app:layout_constraintLeft_toLeftOf="@id/foodProductNameTextView"/>
+
+            <TextView
+                android:id="@+id/daysToExpireTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/barrier"
+                app:layout_constraintRight_toRightOf="parent"
+                android:drawableLeft="@android:drawable/ic_menu_today"
+                tools:text="Days to expire"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
