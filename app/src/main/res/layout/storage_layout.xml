@@ -40,9 +40,9 @@
                 android:id="@+id/productsCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/storageTextView"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/storageTextView"
-                android:layout_marginLeft="@dimen/storage_name_text_size"
+                android:layout_marginRight="10dp"
                 android:textSize="20sp"
                 tools:text="10"/>
 

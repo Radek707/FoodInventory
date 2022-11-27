@@ -16,6 +16,7 @@ import com.example.foodinvetoryapp.R;
 import com.example.foodinvetoryapp.models.FoodProduct;
 
 import java.util.List;
+import java.util.Locale;
 
 public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.FoodProductViewHolder>{
 
@@ -41,7 +42,9 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
         FoodProduct foodProduct = foodProductList.get(position);
         holder.foodProductNameTextView.setText(foodProduct.getName());
         if (foodProduct.getNutrientScore() != null) {
-            holder.nutrientScoreTextView.setText("Nutrient score: " + foodProduct.getNutrientScore());
+            holder.nutrientScoreTextView.setText("Nutrient score: " + foodProduct.getNutrientScore().toUpperCase(Locale.ROOT));
+        } else {
+            holder.nutrientScoreTextView.setVisibility(View.GONE);
         }
     }
 

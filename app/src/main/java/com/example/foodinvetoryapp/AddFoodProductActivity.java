@@ -2,11 +2,14 @@ package com.example.foodinvetoryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodinvetoryapp.callbacks.APICallback;
@@ -17,12 +20,18 @@ import com.example.foodinvetoryapp.repository.MyRepository;
 import com.example.foodinvetoryapp.repository.RepositoryProvider;
 import com.example.foodinvetoryapp.services.MyRetrofitAPI;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddFoodProductActivity extends AppCompatActivity implements APICallback<OpenFoodFactsResponse> {
 
     public static final int NO_FOOD_PRODUCT = -1;
     private FoodProduct foodProduct;
     private MyRepository myRepository;
-    private EditText addFoodProductNameEditText;
+    private EditText addFoodProductNameEditText, expireDateEditText;
+    private TextView nutrientScoreTextView;
     private Storage currentStorage;
     private int foodProductPosition;
     private long foodProductId;
@@ -30,22 +39,17 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private String barcodeValue;
     private String nutrientScore;
     private String frontImageUrl;
-    Button deleteButton;
+    private Button deleteButton, saveButton;
+    private Date expireDate;
+
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food_product);
 
-        addFoodProductNameEditText = findViewById(R.id.addFoodProductNameEditText);
-
-        Button saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(view -> saveFoodProduct());
-
-        deleteButton = findViewById(R.id.deleteButton);
-
-        Button scanButton = findViewById(R.id.scanButton);
-        scanButton.setOnClickListener(view -> openScanActivity());
+        initView();
 
         myRepository = RepositoryProvider.getInstance(this);
         MyRetrofitAPI myRetrofitAPI = MyRetrofitAPI.getInstance();
@@ -72,6 +76,48 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         }
     }
 
+    private void initView() {
+        addFoodProductNameEditText = findViewById(R.id.addFoodProductNameEditText);
+        nutrientScoreTextView = findViewById(R.id.nutrientScoreTextView);
+        expireDateEditText = findViewById(R.id.expireDateEditText);
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(view -> saveFoodProduct());
+        deleteButton = findViewById(R.id.deleteButton);
+        Button scanButton = findViewById(R.id.scanButton);
+        scanButton.setOnClickListener(view -> openScanActivity());
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateExpireDate();
+            }
+        };
+
+        expireDateEditText.setOnClickListener(view -> pickUpDate(date));
+    }
+
+    private void pickUpDate(DatePickerDialog.OnDateSetListener date) {
+        new DatePickerDialog(AddFoodProductActivity.this,
+                date,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void updateExpireDate() {
+        expireDate = myCalendar.getTime();
+        formatExpireDateInEditText(myCalendar.getTime());
+    }
+
+    private void formatExpireDateInEditText(Date time) {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        expireDateEditText.setText(dateFormat.format(time));
+    }
+
     private void openScanActivity() {
         Intent intent = new Intent(this, ScanActivity.class);
         intent.putExtra(TAG.STORAGE_ID, storageId);
@@ -90,17 +136,26 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private void updateFoodProductUI(FoodProduct foodProduct) {
         if (foodProduct != null) {
             addFoodProductNameEditText.setText(foodProduct.getName());
+            if (nutrientScore != null) {
+                nutrientScoreTextView.setText("Nutrient score: " +
+                        foodProduct.getNutrientScore().toUpperCase(Locale.ROOT));
+            }
+            if (foodProduct.getExpireDate() != null) {
+                formatExpireDateInEditText(foodProduct.getExpireDate());
+            }
         }
     }
 
     private void saveFoodProduct() {
         String foodProductName = addFoodProductNameEditText.getText().toString();
+
         if (foodProduct == null) {
             FoodProduct foodProduct = new FoodProduct();
             foodProduct.setStorageId(currentStorage.getId());
             foodProduct.setName(foodProductName);
             foodProduct.setBarCode(barcodeValue);
             foodProduct.setNutrientScore(nutrientScore);
+            foodProduct.setExpireDate(expireDate);
             myRepository.addFoodProduct(foodProduct);
             currentStorage.getFoodProducts().add(foodProduct);
         } else {
@@ -109,6 +164,9 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             }
             if (foodProduct.getBarCode() == null && barcodeValue != null) {
                 foodProduct.setBarCode(barcodeValue);
+            }
+            if (expireDate != null) {
+                foodProduct.setExpireDate(expireDate);
             }
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);

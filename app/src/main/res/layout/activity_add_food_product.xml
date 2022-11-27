@@ -9,43 +9,63 @@
 
     <EditText
         android:id="@+id/addFoodProductNameEditText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="put food product name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/expireDateEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addFoodProductNameEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:hint="put expire date"/>
+
+    <TextView
+        android:id="@+id/nutrientScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/expireDateEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        tools:text="Nutrient score"/>
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/save_button_left_margin"
         android:layout_marginTop="@dimen/save_button_top_margin"
+        android:backgroundTint="@android:color/holo_green_light"
         android:text="save"
-        android:backgroundTint="@color/teal_200"
-        app:layout_constraintLeft_toRightOf="@id/deleteButton"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addFoodProductNameEditText" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/scanButton"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/delete_button_right_margin"
+        android:backgroundTint="@android:color/holo_red_light"
         android:text="delete"
         android:textColor="@color/black"
-        android:backgroundTint="#F44336"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/saveButton"
+        app:layout_constraintEnd_toStartOf="@+id/saveButton"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/saveButton" />
 
     <Button
         android:id="@+id/scanButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/saveButton"
-        app:layout_constraintLeft_toLeftOf="@id/saveButton"
-        app:layout_constraintRight_toRightOf="@id/saveButton"
+        android:backgroundTint="#03A9F4"
         android:text="scan"
-        android:backgroundTint="#4CAF50"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saveButton"
+        app:layout_constraintTop_toTopOf="@+id/saveButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

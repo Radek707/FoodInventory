@@ -26,24 +26,28 @@
 
             <TextView
                 android:id="@+id/foodProductNameTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
                 android:textSize="@dimen/food_product_name_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Food product name"/>
+                tools:text="Food product name Food product nameFood product nameFood product name"/>
 
             <TextView
                 android:id="@+id/nutrientScoreTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@id/foodProductNameTextView"
-                app:layout_constraintTop_toTopOf="@id/foodProductNameTextView"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                tools:text="Nutrient score"
                 android:textSize="20sp"
-                tools:text="N"
-                />
+                app:layout_constraintTop_toBottomOf="@id/foodProductNameTextView"
+                app:layout_constraintLeft_toLeftOf="@id/foodProductNameTextView"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
