@@ -42,6 +42,7 @@ public class FoodProductAdapter extends RecyclerView.Adapter<FoodProductAdapter.
         FoodProduct foodProduct = foodProductList.get(position);
         holder.foodProductNameTextView.setText(foodProduct.getName());
         if (foodProduct.getNutrientScore() != null) {
+            holder.nutrientScoreTextView.setVisibility(View.VISIBLE);
             holder.nutrientScoreTextView.setText("Nutrient score: " + foodProduct.getNutrientScore().toUpperCase(Locale.ROOT));
         } else {
             holder.nutrientScoreTextView.setVisibility(View.GONE);

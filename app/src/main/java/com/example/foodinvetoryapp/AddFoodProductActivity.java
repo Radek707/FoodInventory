@@ -159,15 +159,9 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             myRepository.addFoodProduct(foodProduct);
             currentStorage.getFoodProducts().add(foodProduct);
         } else {
-            if (foodProduct.getNutrientScore() == null && nutrientScore != null) {
-                foodProduct.setNutrientScore(nutrientScore);
-            }
-            if (foodProduct.getBarCode() == null && barcodeValue != null) {
-                foodProduct.setBarCode(barcodeValue);
-            }
-            if (expireDate != null) {
-                foodProduct.setExpireDate(expireDate);
-            }
+            foodProduct.setNutrientScore(nutrientScore);
+            foodProduct.setBarCode(barcodeValue);
+            foodProduct.setExpireDate(expireDate);
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);
         }
