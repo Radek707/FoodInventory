@@ -136,7 +136,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private void updateFoodProductUI(FoodProduct foodProduct) {
         if (foodProduct != null) {
             addFoodProductNameEditText.setText(foodProduct.getName());
-            if (nutrientScore != null) {
+            if (foodProduct.getNutrientScore() != null) {
                 nutrientScoreTextView.setText("Nutrient score: " +
                         foodProduct.getNutrientScore().toUpperCase(Locale.ROOT));
             }
