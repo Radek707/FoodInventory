@@ -45,7 +45,7 @@ public class MyRetrofitAPI {
         return instance;
     }
 
-    public void getOpenFoodFactsResponse(APICallback callback, String barcode) {
+    public void getOpenFoodFactsResponse(APICallback<OpenFoodFactsResponse> callback, String barcode) {
         OpenFoodFactsService service = retrofit.create(OpenFoodFactsService.class);
         Call<OpenFoodFactsResponse> call = service.searchProductById(barcode);
         call.enqueue(new Callback<OpenFoodFactsResponse>() {

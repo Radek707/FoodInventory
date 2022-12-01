@@ -43,6 +43,8 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
         int productCount = storage.getFoodProducts().size();
         if (productCount > 0) {
             holder.productsCountTextView.setText(String.valueOf(productCount));
+        } else {
+            holder.productsCountTextView.setText("");
         }
     }
 
