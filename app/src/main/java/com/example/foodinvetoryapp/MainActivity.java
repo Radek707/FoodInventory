@@ -14,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements StorageAdapter.OnStorageClickListener{
+public class MainActivity extends AppCompatActivity{
 
     private MyRepository myLocalRepository;
     private List<Storage> storages;
@@ -36,15 +36,7 @@ public class MainActivity extends AppCompatActivity implements StorageAdapter.On
         storages = myLocalRepository.getAllStorages();
 
         RecyclerView recyclerView = findViewById(R.id.storageRecyclerView);
-        recyclerView.setAdapter(new StorageAdapter(this, storages, this));
-    }
-
-    @Override
-    public void onClick(int position) {
-        Intent intent = new Intent(this, StorageDetailsActivity.class);
-        long id = storages.get(position).getId();
-        intent.putExtra(TAG.STORAGE_ID, id);
-        startActivity(intent);
+        recyclerView.setAdapter(new StorageAdapter(this, storages));
     }
 
     private void openAddStorageActivity() {

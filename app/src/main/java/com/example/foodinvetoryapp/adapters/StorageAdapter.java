@@ -1,6 +1,7 @@
 package com.example.foodinvetoryapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodinvetoryapp.R;
+import com.example.foodinvetoryapp.StorageDetailsActivity;
+import com.example.foodinvetoryapp.TAG;
 import com.example.foodinvetoryapp.models.FoodProduct;
 import com.example.foodinvetoryapp.models.Storage;
 
@@ -21,19 +24,17 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
 
     private Context context;
     private List<Storage> storages;
-    private OnStorageClickListener mOnStorageClickListener;
 
-    public StorageAdapter(Context context, List<Storage> storages, OnStorageClickListener mOnStorageClickListener) {
+    public StorageAdapter(Context context, List<Storage> storages) {
         this.context = context;
         this.storages = storages;
-        this.mOnStorageClickListener = mOnStorageClickListener;
     }
 
     @NonNull
     @Override
     public StorageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new StorageViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.storage_layout, parent, false), mOnStorageClickListener);
+                .inflate(R.layout.storage_layout, parent, false));
     }
 
     @Override
@@ -46,6 +47,15 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
         } else {
             holder.productsCountTextView.setText("");
         }
+        holder.storageConstraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, StorageDetailsActivity.class);
+                long id = storage.getId();
+                intent.putExtra(TAG.STORAGE_ID, id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,14 +63,12 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
         return storages.size();
     }
 
-    static class StorageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class StorageViewHolder extends RecyclerView.ViewHolder {
         CardView storageCardView;
         TextView storageTextView, productsCountTextView;
         View storageLayout, storageConstraintLayout;
 
-        OnStorageClickListener onStorageClickListener;
-
-        public StorageViewHolder(@NonNull View itemView, OnStorageClickListener onStorageClickListener) {
+        public StorageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             storageCardView = itemView.findViewById(R.id.storageCardView);
@@ -68,18 +76,6 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.StorageV
             storageTextView = itemView.findViewById(R.id.storageTextView);
             productsCountTextView = itemView.findViewById(R.id.productsCountTextView);
             storageConstraintLayout = itemView.findViewById(R.id.storageConstraintLayout);
-
-            this.onStorageClickListener = onStorageClickListener;
-            itemView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View v) {
-            onStorageClickListener.onClick(getAdapterPosition());
-        }
-    }
-
-    public interface OnStorageClickListener {
-        void onClick(int position);
     }
 }
