@@ -129,7 +129,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
     private void deleteFoodProduct() {
         myRepository.deleteFoodProduct(foodProductId);
         currentStorage.getFoodProducts().remove(foodProduct);
-        Toast.makeText(this, "Food product deleted.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.food_product_deleted, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -137,8 +137,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
         if (foodProduct != null) {
             addFoodProductNameEditText.setText(foodProduct.getName());
             if (foodProduct.getNutrientScore() != null) {
-                nutrientScoreTextView.setText("Nutrient score: " +
-                        foodProduct.getNutrientScore().toUpperCase(Locale.ROOT));
+                nutrientScoreTextView.setText(getString(R.string.nutrient_score_with_value, foodProduct.getNutrientScore().toUpperCase()));
             }
             if (foodProduct.getExpireDate() != null) {
                 formatExpireDateInEditText(foodProduct.getExpireDate());
@@ -165,7 +164,7 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             foodProduct.setName(foodProductName);
             myRepository.editFoodProduct(foodProduct);
         }
-        Toast.makeText(this, "Food product saved.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.food_product_saved, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -177,12 +176,12 @@ public class AddFoodProductActivity extends AppCompatActivity implements APICall
             nutrientScore = openFoodFactsResponse.getProduct().getNutrientScore();
             frontImageUrl = openFoodFactsResponse.getProduct().getFrontImageUrl();
         } else {
-            Toast.makeText(this, "product not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.product_not_found, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onFailure(String message) {
-        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.error) + message, Toast.LENGTH_SHORT).show();
     }
 }

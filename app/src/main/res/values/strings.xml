@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FoodInvetoryApp</string>
+    <string name="put_storage_name">Put storage name.</string>
+    <string name="storage_saved">Storage saved.</string>
+    <string name="storage_deleted">Storage deleted.</string>
+    <string name="food_product_saved">Food product saved.</string>
+    <string name="product_not_found">Product not found.</string>
+    <string name="error">Error: </string>
+    <string name="nutrient_score_with_value">Nutrient score: %1$s</string>
+    <string name="food_product_deleted">Food product deleted.</string>
 </resources>

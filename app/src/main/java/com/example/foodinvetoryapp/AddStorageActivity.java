@@ -31,15 +31,17 @@ public class AddStorageActivity extends AppCompatActivity {
 
         myRepository = RepositoryProvider.getInstance(this);
 
-        Button saveButton = findViewById(R.id.saveButton);
-        Button deleteButton = findViewById(R.id.deleteButton);
+        initView();
+    }
 
-        saveButton.setOnClickListener(view -> saveStorage());
-
-        addStorageEditText = findViewById(R.id.addStorageEditText);
-
+    private void initView() {
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, NO_STORAGE);
+
+        Button saveButton = findViewById(R.id.saveButton);
+        Button deleteButton = findViewById(R.id.deleteButton);
+        saveButton.setOnClickListener(view -> saveStorage());
+        addStorageEditText = findViewById(R.id.addStorageEditText);
 
         if (storageId != NO_STORAGE) {
             deleteButton.setOnClickListener(view -> deleteStorage());
@@ -63,7 +65,7 @@ public class AddStorageActivity extends AppCompatActivity {
             myRepository.deleteFoodProduct(foodProduct.getId());
         }
         myRepository.deleteStorage(storageId);
-        Toast.makeText(this, "Storage deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.storage_deleted, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -72,7 +74,7 @@ public class AddStorageActivity extends AppCompatActivity {
         String storageName = addStorageEditText.getText().toString();
 
         if (storageName.equals("")) {
-            Toast.makeText(this, "Put storage name.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.put_storage_name, Toast.LENGTH_SHORT).show();
         } else {
             if (storage == null) {
                 Storage storage = new Storage();
@@ -82,7 +84,7 @@ public class AddStorageActivity extends AppCompatActivity {
                 storage.setStorageName(storageName);
                 myRepository.editStorage(storage);
             }
-            Toast.makeText(this, "Storage saved.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.storage_saved, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
