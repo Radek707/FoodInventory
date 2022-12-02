@@ -34,13 +34,13 @@ public class StorageDetailsActivity extends AppCompatActivity
 
         FloatingActionButton addFoodProductButton = findViewById(R.id.addFoodProductButton);
         addFoodProductButton.setOnClickListener(view -> openAddFoodProductActivity());
+
+        myRepository = RepositoryProvider.getInstance(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        myRepository = RepositoryProvider.getInstance(this);
 
         Intent intent = getIntent();
         storageId = intent.getLongExtra(TAG.STORAGE_ID, NO_STORAGE);

@@ -59,7 +59,7 @@ public class AddStorageActivity extends AppCompatActivity {
 
     private void deleteStorage() {
         List<FoodProduct> foodProducts = myRepository.getStorageById(storageId).getFoodProducts();
-        for (FoodProduct foodProduct:foodProducts) {
+        for (FoodProduct foodProduct : foodProducts) {
             myRepository.deleteFoodProduct(foodProduct.getId());
         }
         myRepository.deleteStorage(storageId);
@@ -71,16 +71,19 @@ public class AddStorageActivity extends AppCompatActivity {
     private void saveStorage() {
         String storageName = addStorageEditText.getText().toString();
 
-        if (storage == null) {
-            Storage storage = new Storage();
-            storage.setStorageName(storageName);
-            myRepository.addStorage(storage);
+        if (storageName.equals("")) {
+            Toast.makeText(this, "Put storage name.", Toast.LENGTH_SHORT).show();
         } else {
-            storage.setStorageName(storageName);
-            myRepository.editStorage(storage);
+            if (storage == null) {
+                Storage storage = new Storage();
+                storage.setStorageName(storageName);
+                myRepository.addStorage(storage);
+            } else {
+                storage.setStorageName(storageName);
+                myRepository.editStorage(storage);
+            }
+            Toast.makeText(this, "Storage saved.", Toast.LENGTH_SHORT).show();
+            finish();
         }
-
-        Toast.makeText(this, "Storage saved.", Toast.LENGTH_SHORT).show();
-        finish();
     }
 }
